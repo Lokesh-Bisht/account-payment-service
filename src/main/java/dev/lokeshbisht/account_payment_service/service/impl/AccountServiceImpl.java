@@ -60,11 +60,6 @@ public class AccountServiceImpl implements AccountService {
         return prepareCreateAccountResponse(updatedUser, account);
     }
 
-    @Override
-    public AccountDto getAccountById(Long id) {
-        return null;
-    }
-
     private Account createAccount(CreateAccountRequestDto createAccountRequestDto, String userId) {
         Account account = new Account();
         account.setBalance(createAccountRequestDto.getBalance());
@@ -81,5 +76,27 @@ public class AccountServiceImpl implements AccountService {
             .email(user.getEmail())
             .accounts(List.of(account))
             .build();
+    }
+
+    @Override
+    public AccountDto getAccountById(Long id) {
+        Optional<Account> accountOptional = accountRepository.findById(id);
+        if (accountOptional.isPresent()) {
+            Account account = accountOptional.get();
+            return convertToDto(account);
+        }
+        return null;
+    }
+
+    private AccountDto convertToDto(Account account) {
+        AccountDto accountDTO = new AccountDto();
+        accountDTO.setId(account.getId());
+        accountDTO.setBalance(account.getBalance());
+        accountDTO.setAccountType(account.getAccountType());
+        accountDTO.setCreatedBy(account.getCreatedBy());
+        accountDTO.setCreatedAt(account.getCreatedAt());
+        accountDTO.setUpdatedBy(account.getUpdatedBy());
+        accountDTO.setUpdatedAt(account.getUpdatedAt());
+        return accountDTO;
     }
 }

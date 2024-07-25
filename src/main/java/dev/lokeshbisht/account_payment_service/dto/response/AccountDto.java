@@ -3,7 +3,6 @@ package dev.lokeshbisht.account_payment_service.dto.response;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import dev.lokeshbisht.account_payment_service.enums.AccountType;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
