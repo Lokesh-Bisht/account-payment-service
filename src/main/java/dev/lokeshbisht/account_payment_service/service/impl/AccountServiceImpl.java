@@ -2,16 +2,19 @@ package dev.lokeshbisht.account_payment_service.service.impl;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import dev.lokeshbisht.account_payment_service.dto.account.AccountsDto;
+import dev.lokeshbisht.account_payment_service.dto.account.AccountIdsDto;
 import dev.lokeshbisht.account_payment_service.dto.request.CreateAccountRequestDto;
 import dev.lokeshbisht.account_payment_service.dto.response.AccountDto;
 import dev.lokeshbisht.account_payment_service.dto.response.UserAccountInfoDto;
 import dev.lokeshbisht.account_payment_service.entity.Account;
 import dev.lokeshbisht.account_payment_service.entity.User;
+import dev.lokeshbisht.account_payment_service.entity.UserAccount;
 import dev.lokeshbisht.account_payment_service.enums.AccountType;
+import dev.lokeshbisht.account_payment_service.enums.PermissionsType;
 import dev.lokeshbisht.account_payment_service.exceptions.InternalServerErrorException;
 import dev.lokeshbisht.account_payment_service.exceptions.UnauthorizedAccessException;
 import dev.lokeshbisht.account_payment_service.repository.AccountRepository;
+import dev.lokeshbisht.account_payment_service.repository.UserAccountRepository;
 import dev.lokeshbisht.account_payment_service.repository.UserRepository;
 import dev.lokeshbisht.account_payment_service.service.AccountService;
 import org.slf4j.Logger;
@@ -33,6 +36,9 @@ public class AccountServiceImpl implements AccountService {
     private AccountRepository accountRepository;
 
     @Autowired
+    private UserAccountRepository userAccountRepository;
+
+    @Autowired
     private ObjectMapper objectMapper;
 
     public static final Logger logger = LoggerFactory.getLogger(AccountServiceImpl.class);
@@ -46,8 +52,8 @@ public class AccountServiceImpl implements AccountService {
             throw new UnauthorizedAccessException("Unauthorized access.");
         }
         Account account = createAccount(createAccountRequestDto, user.get().getUserId());
-        AccountsDto accountsDto = new AccountsDto();
-        accountsDto.setAccounts(List.of(account));
+        AccountIdsDto accountsDto = new AccountIdsDto();
+        accountsDto.setAccounts(List.of(account.getId().toString()));
         String accounts = "";
         try {
             accounts = objectMapper.writeValueAsString(accountsDto);
@@ -57,6 +63,8 @@ public class AccountServiceImpl implements AccountService {
         }
         user.get().setAccounts(accounts);
         User updatedUser = userRepository.save(user.get());
+        logger.info("Create user permissions");
+        createUserAccountPermissions(user.get(), account);
         return prepareCreateAccountResponse(updatedUser, account);
     }
 
@@ -67,6 +75,17 @@ public class AccountServiceImpl implements AccountService {
         account.setCreatedBy(userId);
         account.setCreatedAt(new Date());
         return accountRepository.save(account);
+    }
+
+    private void createUserAccountPermissions(User user, Account account) {
+        UserAccount userAccount = new UserAccount();
+        userAccount.setAccountId(account.getId());
+        userAccount.setUserId(user.getUserId());
+        userAccount.setAdmin(true);
+        userAccount.setPermissions(PermissionsType.VIEW_AND_PAY_BILL.toString());
+        userAccount.setCreatedAt(new Date());
+        userAccount.setCreatedBy(user.getUserId());
+        userAccountRepository.save(userAccount);
     }
 
     private UserAccountInfoDto prepareCreateAccountResponse(User user, Account account) {

@@ -26,14 +26,18 @@ public class UserAccount {
     private String userId;
 
     @Column(name = "account_id", nullable = false)
-    private String accountId;
+    private Long accountId;
 
     @Column(name = "is_admin")
     private boolean isAdmin;
 
     private String permissions;
 
-    private double limit;
+    @Column(name = "payment_limit")
+    private Double paymentLimit;
+
+    @Column(name = "created_by")
+    private String createdBy;
 
     @Column(name = "created_at")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = ISO8601)

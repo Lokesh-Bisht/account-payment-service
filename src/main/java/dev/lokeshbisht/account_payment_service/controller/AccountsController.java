@@ -23,8 +23,10 @@ public class AccountsController {
         return accountService.createAccount(createAccountRequestDto);
     }
 
-//    @GetMapping("/{id}")
-//    public AccountDto getAccountById(@PathVariable Long id) {
-//        return accountService.getAccountById(id);
-//    }
+    @GetMapping("/{accountId}")
+    public AccountDto getAccountById(@PathVariable Long accountId) {
+        return accountService.getAccountById(accountId);
+    }
+
+
 }
