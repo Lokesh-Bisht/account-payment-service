@@ -10,13 +10,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/v1")
+@RequestMapping("/v1/account")
 public class AccountsController {
 
     @Autowired
     private AccountService accountService;
 
-    @PostMapping("/account")
+    @PostMapping("/")
     public UserAccountInfoDto createAccount(@RequestBody CreateAccountRequestDto createAccountRequestDto) {
         return accountService.createAccount(createAccountRequestDto);
     }
