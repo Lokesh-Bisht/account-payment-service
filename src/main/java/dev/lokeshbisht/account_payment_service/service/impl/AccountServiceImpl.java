@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import dev.lokeshbisht.account_payment_service.dto.account.AccountsDto;
 import dev.lokeshbisht.account_payment_service.dto.request.CreateAccountRequestDto;
+import dev.lokeshbisht.account_payment_service.dto.response.AccountDto;
 import dev.lokeshbisht.account_payment_service.dto.response.UserAccountInfoDto;
 import dev.lokeshbisht.account_payment_service.entity.Account;
 import dev.lokeshbisht.account_payment_service.entity.User;
@@ -57,6 +58,11 @@ public class AccountServiceImpl implements AccountService {
         user.get().setAccounts(accounts);
         User updatedUser = userRepository.save(user.get());
         return prepareCreateAccountResponse(updatedUser, account);
+    }
+
+    @Override
+    public AccountDto getAccountById(Long id) {
+        return null;
     }
 
     private Account createAccount(CreateAccountRequestDto createAccountRequestDto, String userId) {
