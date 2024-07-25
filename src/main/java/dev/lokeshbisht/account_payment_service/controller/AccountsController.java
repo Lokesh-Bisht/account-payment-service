@@ -12,19 +12,19 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/v1")
+@RequestMapping("/v1/account")
 public class AccountsController {
 
     @Autowired
     private AccountService accountService;
 
-    @PostMapping("/account")
+    @PostMapping("/")
     public UserAccountInfoDto createAccount(@RequestBody CreateAccountRequestDto createAccountRequestDto) {
         return accountService.createAccount(createAccountRequestDto);
     }
 
-    @GetMapping("/{id}")
-    public AccountDto getAccountById(@PathVariable Long id) {
-        return accountService.getAccountById(id);
-    }
+//    @GetMapping("/{id}")
+//    public AccountDto getAccountById(@PathVariable Long id) {
+//        return accountService.getAccountById(id);
+//    }
 }

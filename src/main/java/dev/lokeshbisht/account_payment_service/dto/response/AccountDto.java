@@ -13,16 +13,18 @@ import java.util.Date;
 @ToString
 @Setter
 public class AccountDto {
+
     private Long id;
+
     private double balance;
+
     private AccountType accountType;
+
     private String createdBy;
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
     private Date createdAt;
 
     private String updatedBy;
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
     private Date updatedAt;
 }

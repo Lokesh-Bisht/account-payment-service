@@ -2,6 +2,9 @@ package dev.lokeshbisht.account_payment_service.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.Date;
 
@@ -9,6 +12,9 @@ import static dev.lokeshbisht.account_payment_service.constants.JsonConstants.IS
 
 @Entity
 @Table(name = "users_accounts")
+@Getter
+@Setter
+@NoArgsConstructor
 public class UserAccount {
 
     @Id
