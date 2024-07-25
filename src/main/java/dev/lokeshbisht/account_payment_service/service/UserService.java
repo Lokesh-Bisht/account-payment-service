@@ -1,8 +1,9 @@
 package dev.lokeshbisht.account_payment_service.service;
 
 import dev.lokeshbisht.account_payment_service.dto.response.UserAccountInfoDto;
+import dev.lokeshbisht.account_payment_service.dto.response.UserAccountPermissionInfoDto;
 
 public interface UserService {
 
-    UserAccountInfoDto findAllAccounts(String userId);
+    UserAccountPermissionInfoDto findAllAccounts(String userId);
 }

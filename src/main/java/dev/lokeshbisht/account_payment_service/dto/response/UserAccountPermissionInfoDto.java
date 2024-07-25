@@ -1,6 +1,6 @@
 package dev.lokeshbisht.account_payment_service.dto.response;
 
-import dev.lokeshbisht.account_payment_service.entity.Account;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -12,7 +12,7 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserAccountInfoDto {
+public class UserAccountPermissionInfoDto {
 
     private String userId;
 
@@ -20,5 +20,6 @@ public class UserAccountInfoDto {
 
     private String email;
 
-    private List<Account> accounts;
+    @JsonProperty("accounts")
+    private List<AccountPermissionDto> accounts;
 }

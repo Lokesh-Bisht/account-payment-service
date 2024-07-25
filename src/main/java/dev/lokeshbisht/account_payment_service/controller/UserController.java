@@ -1,6 +1,7 @@
 package dev.lokeshbisht.account_payment_service.controller;
 
 import dev.lokeshbisht.account_payment_service.dto.response.UserAccountInfoDto;
+import dev.lokeshbisht.account_payment_service.dto.response.UserAccountPermissionInfoDto;
 import dev.lokeshbisht.account_payment_service.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,7 +17,7 @@ public class UserController {
     private UserService userService;
 
     @GetMapping("/{userId}")
-    public UserAccountInfoDto fetchAllAccounts(@PathVariable String userId) {
+    public UserAccountPermissionInfoDto fetchAllAccounts(@PathVariable String userId) {
         return userService.findAllAccounts(userId);
     }
 }
